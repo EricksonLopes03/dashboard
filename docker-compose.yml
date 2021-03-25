@@ -1,0 +1,33 @@
+version: '3'
+services: 
+  php-server:
+    build: ./docker/php-server
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./project:/var/www/html/
+    networks: 
+      - default
+
+  mysql:
+    image: mysql:8.0
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - ${MYSQL_DATA_DIR-./docker/mysql/data}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR-./docker/mysql/logs}:/var/log/mysql
+    environment: #variaveis que serao encaminhadas para a configuracao do banco
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: demo
+      MYSQL_PASSWORD: password
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - '8010:80'
+    volumes:
+      - /sessions
