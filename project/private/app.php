@@ -1,9 +1,9 @@
 <?php 
     Class Dashboard{
-        private $dataInicio;
-        private $dataFim;
-        private $numeroVendas;
-        private $totalVendas;
+        public $dataInicio;
+        public $dataFim;
+        public $numeroVendas;
+        public $totalVendas;
         // private $clientesAtivos;
         // private $clientesInativos;
         // private $totalReclamacoes;
@@ -26,7 +26,7 @@
     }
 
     class Conexao{
-        private $dsn = 'mysql:host=mysql;dbname=dashboard';
+        private $dsn = 'mysql:host=mysql;dbname=dashboard;charset=utf8';
         private $usuario = 'root';
         private $senha = 'password';
         private $conexao = null;
@@ -88,9 +88,12 @@
     $dao = new Dao($dashboard, $conexao);
     $dashboard->__set('numeroVendas', $dao->getNumeroVendas());
     $dashboard->__set('totalVendas', $dao->getTotalVendas());
-    echo json_encode($dashboard);
-   //print_r($dashboard);
     
+
+   echo json_encode($dashboard);
+  
+
+
 
 
 ?>
